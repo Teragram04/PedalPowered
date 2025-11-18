@@ -9,4 +9,4 @@ def home():
 
 @app.route("/logride")
 def logride():
-    return render_template("logride.html")
+    return render_template("logride.html", title="Log a Ride")

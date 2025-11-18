@@ -2,6 +2,11 @@
     <html>
 
         <head>
+             {% if title %}
+                <title>PedalPowered - {{title}}</title>
+            {% else %}
+                <title>PedalPowered</title>
+            {% endif %}
 
         </head>
 
