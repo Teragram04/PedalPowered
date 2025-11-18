@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+    <html>
+
+        <head>
+            <!--This is part of the templating engine, controls what the tab name is-->
+            {% if title %}
+                <title>PedalPowered - {{title}}</title>
+            {% else %}
+                <title>PedalPowered</title>
+            {% endif %}
+        </head>
+
+        <body>
+            {% block content %}{% endblock %}
+        </body>
+
+    </html>

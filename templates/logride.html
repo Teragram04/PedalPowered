@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-    <html>
+{% extends "layout.html" %}
 
-        <head>
-            <!--This is part of the templating engine, controls what the tab name is-->
-            {% if title %}
-                <title>PedalPowered - {{title}}</title>
-            {% else %}
-                <title>PedalPowered</title>
-            {% endif %}
-        </head>
+{% block content %}
 
-        <body>
-            <h1>Log your Ride!</h1>
-        </body>
+    <h1>Log your Ride!</h1>
 
-    </html>
+{% endblock content %}
