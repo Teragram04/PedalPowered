@@ -1,5 +1,5 @@
 # TO RUN, COMMAND IS python -m flask --app Test run
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 app = Flask(__name__)
 
 @app.route("/")
@@ -10,3 +10,7 @@ def home():
 @app.route("/logride")
 def logride():
     return render_template("logride.html", title="Log a Ride")
+
+@app.route("/stats")
+def stats():
+    return render_template("stats.html", title="Your Stats")
