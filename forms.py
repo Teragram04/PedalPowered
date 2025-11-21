@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 #Used to write classes in py that are THEN converted to html within the template
 
-class Register(FlaskForm):
+class RegisterForm(FlaskForm):
 
     username = StringField('Username', validators=[DataRequired(),Length(min=5,
     max= 20, message="Username must be between 5-20 characters long")])
@@ -17,7 +17,9 @@ class Register(FlaskForm):
 
     submit_registration = SubmitField('Register!')
 
-class Login(FlaskForm):
+
+
+class LoginForm(FlaskForm):
 
     username = StringField('Username', validators=[DataRequired(),Length(min=5,
     max= 20)])
