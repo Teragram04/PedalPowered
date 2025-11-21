@@ -12,78 +12,77 @@
                 <!--Create the body of the form-->
                 <legend class="border-bottom mb-4">Sign up!</legend>
                 <div class="form-group">
+
                     <!--Create username field. Repeats for email and password-->
-                    {{form.username.label(class="form=control-label")}}
-
-
+                    {{form.username.label(class="form-control-label")}}
                     <!--Print any errors-->
-                    {{% if form.username.errors %}}
+                    {% if form.username.errors %}
 
-                        {{form.username(class="form=control form=control-lg is-invalid")}}
+                        {{form.username(class="form-control form-control-lg is-invalid")}}
 
-                            <div class="invalid feedback">
-                                {{% for error in form.username.errors %}}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
                                     <span>{{error}}</span>
-                                {{% endfor %}}
+                                {% endfor %}
                             </div>
-                    {{% else %}}
-                        {{form.username(class="form=control form=control-lg")}}
-                    {{% endif %}}
+                    {% else %}
+                        {{form.username(class="form-control form-control-lg")}}
+                    {% endif %}
                     <!--DONE PRINTING ERRORS-->
-
                 </div>
 
+                <!--Create Email field-->
                 <div class="form-group">
-                    <!--Create username field. Repeats for email and password-->
-                    {{form.email.label(class="form=control-label")}}
-                    {{% if form.email.errors %}}
+                    {{form.email.label(class="form-control-label")}}
+                    {% if form.email.errors %}
 
-                        {{form.email(class="form=control form=control-lg is-invalid")}}
+                        {{form.email(class="form-control form-control-lg is-invalid")}}
 
-                            <div class="invalid feedback">
-                                {{% for error in form.email.errors %}}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
                                     <span>{{error}}</span>
-                                {{% endfor %}}
+                                {% endfor %}
                             </div>
-                    {{% else %}}
-                        {{form.email(class="form=control form=control-lg")}}
-                    {{% endif %}}
+                    {% else %}
+                        {{form.email(class="form-control form-control-lg")}}
+                    {% endif %}
                 </div>
 
                 <!--Password-->
                 <div class="form-group">
-                    {{form.password.label(class="form=control-label")}}
+                    {{form.password.label(class="form-control-label")}}
 
-                    {{% if form.password.errors %}}
+                    {% if form.password.errors %}
 
-                        {{form.password(class="form=control form=control-lg is-invalid")}}
+                        {{form.password(class="form-control form-control-lg is-invalid")}}
 
-                            <div class="invalid feedback">
-                                {{% for error in form.password.errors %}}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
                                     <span>{{error}}</span>
-                                {{% endfor %}}
+                                {% endfor %}
                             </div>
-                    {{% else %}}
-                        {{form.password(class="form=control form=control-lg")}}
-                    {{% endif %}}
+                    {% else %}
+                        {{form.password(class="form-control form-control-lg")}}
+                    {% endif %}
                 </div>
 
                 <!--Confirm Password-->
                 <div class="form-group">
-                    {{form.confirm_password.label(class="form=control-label")}}
-                                        {{% if form.username.errors %}}
+                    {{form.confirm_password.label(class="form-control-label")}}
+                    {% if form.confirm_password.errors %}
 
-                        {{form.confirm_password(class="form=control form=control-lg is-invalid")}}
+                        {{form.confirm_password(class="form-control form-control-lg is-invalid")}}
 
-                            <div class="invalid feedback">
-                                {{% for error in form.confirm_password.errors %}}
+                            <div class="invalid-feedback">
+                                {% for error in form.confirm_password.errors %}
                                     <span>{{error}}</span>
-                                {{% endfor %}}
+                                {% endfor %}
                             </div>
-                    {{% else %}}
-                        {{form.confirm_password(class="form=control form=control-lg")}}
-                    {{% endif %}}
+                    {% else %}
+                        {{form.confirm_password(class="form-control form-control-lg")}}
+                    {% endif %}
                 </div>
+
             </fieldset>
 
             <div class="form-group">
