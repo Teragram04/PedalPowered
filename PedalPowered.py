@@ -1,5 +1,5 @@
 # TO RUN, COMMAND IS python -m flask --app Test run
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect
 from forms import RegisterForm, LoginForm
 from flask_wtf.csrf import CSRFProtect
 app = Flask(__name__)
@@ -21,9 +21,12 @@ def logride():
 def stats():
     return render_template("stats.html", title="Your Stats")
 
-@app.route("/register")
+@app.route("/register", methods = ['GET','POST'])
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        flash(f'Welcome {form.username.data}!','success')
+        return redirect(url_for('home'))
     return render_template("register.html", title="Register", form = form)
 
 @app.route("/")
