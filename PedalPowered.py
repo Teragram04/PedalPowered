@@ -25,12 +25,15 @@ def stats():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        flash(f'Welcome {form.username.data}!','success')
+        flash(f'Welcome to PedalPowered {form.username.data}!','success')
         return redirect(url_for('home'))
     return render_template("register.html", title="Register", form = form)
 
-@app.route("/")
-@app.route("/login")
+@app.route("/", methods = ['GET','POST'])
+@app.route("/login", methods = ['GET','POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        flash(f'Welcome back{form.username.data}!,success')
+        return redirect(url_for('home'))
     return render_template("login.html", title="Login", form=form)

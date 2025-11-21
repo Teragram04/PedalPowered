@@ -44,17 +44,17 @@
 
                     <div class="collapse navbar-collapse" id="navbarToggle">
                         <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="/home">Home</a>
-                        <a class="nav-item nav-link" href="/about">About</a>
+                        <a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
+
                         </div>
 
                         <!-- Navbar Right Side -->
 
                         <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="/login">Login</a>
-                        <a class="nav-item nav-link" href="/register">Register</a>
-                        <a class="nav-item nav-link" href="/logride">Log Your Ride</a>
-                        <a class="nav-item nav-link" href="/stats">Your Stats</a>
+                        <a class="nav-item nav-link" href="{{url_for('login')}}">Login</a>
+                        <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
+                        <a class="nav-item nav-link" href="{{url_for('logride')}}">Log Your Ride</a>
+                        <a class="nav-item nav-link" href="{{url_for('stats')}}">Your Stats</a>
                         </div>
 
                     </div>
