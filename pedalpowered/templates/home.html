@@ -10,7 +10,9 @@
                     <small class="text-muted">{{post.date_posted}}</small>
                 </div>
                 <h2><a class='article-title' href="{{url_for('post',post_id=post.id)}}">{{post.title}}</a></h2>
-                <p class = "article-content">on {{post.ride_date.strftime('%Y-%m-%d')}}, {{post.author.username}} rode {{post.distance}} miles</p>
+                <p class = "article-content">on {{post.ride_date.strftime('%Y-%m-%d')}}, {{post.author.username}} rode {{post.distance}} miles
+                    and saved ${{post.gas_money_saved}}!
+                </p>
             </div>
         </article>
     {%endfor%}
