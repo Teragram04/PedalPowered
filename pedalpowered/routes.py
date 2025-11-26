@@ -20,6 +20,7 @@ def logride():
     if form.validate_on_submit():
         new_ride = rides(title = form.title.data, distance = form.distance.data, gas_price = form.gas_price.data,
                          car_mpg = form.car_mpg.data, author = current_user)
+        new_ride.calculate_money_saved()
         db.session.add(new_ride)
         db.session.commit()
         flash('Ride logged!', 'success')
