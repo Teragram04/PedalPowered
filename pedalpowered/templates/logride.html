@@ -1,7 +1,92 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div class = "content-section">
+    <form method = "POST" action = "">
+        {{ form.hidden_tag() }}
 
-    <h1>Log your Ride!</h1>
+        <fieldset class="form-group">
+
+            <!--Create the body of the form-->
+            <legend class="border-bottom mb-4">Log a new ride!</legend>
+
+                <!--Title-->
+            <div class="form-group">
+                {{form.title.label(class="form-control-label")}}
+                <!--Print any errors-->
+                {% if form.title.errors %}
+                    {{form.title(class="form-control form-control-lg is-invalid")}}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{form.title(class="form-control form-control-lg")}}
+                {% endif %}
+                <!--DONE PRINTING ERRORS-->
+            </div>
+
+            <!--Distance-->
+            <div class="form-group">
+                {{form.distance.label(class="form-control-label")}}
+
+                {% if form.distance.errors %}
+
+                    {{form.distance(class="form-control form-control-lg is-invalid")}}
+
+                        <div class="invalid-feedback">
+                            {% for error in form.distance.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{form.distance(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+
+            <!--Gas price-->
+            <div class="form-group">
+                {{form.gas_price.label(class="form-control-label")}}
+
+                {% if form.gas_price.errors %}
+
+                    {{form.gas_price(class="form-control form-control-lg is-invalid")}}
+
+                        <div class="invalid-feedback">
+                            {% for error in form.gas_price.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{form.gas_price(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+
+            <!--car mpg-->
+            <div class="form-group">
+                {{form.car_mpg.label(class="form-control-label")}}
+
+                {% if form.car_mpg.errors %}
+
+                    {{form.car_mpg(class="form-control form-control-lg is-invalid")}}
+
+                        <div class="invalid-feedback">
+                            {% for error in form.car_mpg.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{form.car_mpg(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+
+        </fieldset>
+
+        <div class="form-group">
+            {{form.submit_registration(class="btn btn-outline-info")}}
+        </div>
+    </form>
+</div>
 
 {% endblock content %}

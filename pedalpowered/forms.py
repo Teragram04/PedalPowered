@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from pedalpowered.models import User
 from flask_login import current_user
@@ -68,3 +68,11 @@ class UpdateAcctForm(FlaskForm):
             user = User.query.filter_by(email = email.data).first()
             if user:
                 raise ValidationError('This email has an associated account already')
+            
+
+class NewRideForm(FlaskForm):
+    title = StringField('*Ride Title', validators=[DataRequired()])
+    distance = FloatField('*Distance in Miles: (00.00)',validators=[DataRequired()])
+    gas_price = FloatField('Avg Gas Cost (0.00)')
+    car_mpg = FloatField('Avg Car MPG (00.0)')
+    submit_registration = SubmitField('Submit my Ride!')

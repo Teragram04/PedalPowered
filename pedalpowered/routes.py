@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
 from pedalpowered.models import User, rides
-from pedalpowered.forms import RegisterForm, LoginForm, UpdateAcctForm
+from pedalpowered.forms import RegisterForm, LoginForm, UpdateAcctForm, NewRideForm
 from pedalpowered import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets
@@ -10,12 +10,21 @@ from PIL import Image
 @app.route("/home")
 @login_required
 def home():
-    return render_template("home.html")
+    ridelog = rides.query.all()
+    return render_template("home.html",posts= ridelog)
 
-@app.route("/logride")
+@app.route("/logride", methods = ['GET','POST'])
 @login_required
 def logride():
-    return render_template("logride.html", title="Log a Ride")
+    form = NewRideForm()
+    if form.validate_on_submit():
+        new_ride = rides(title = form.title.data, distance = form.distance.data, gas_price = form.gas_price.data,
+                         car_mpg = form.car_mpg.data, author = current_user)
+        db.session.add(new_ride)
+        db.session.commit()
+        flash('Ride logged!', 'success')
+        return redirect(url_for('home'))
+    return render_template('logride.html', title='Log a new ride', form=form)
 
 @app.route("/stats")
 @login_required
@@ -75,9 +84,6 @@ def set_profile_pic(form_picture):
     return  picture_file_name
 
 
-
-
-
 @app.route("/account", methods = ['GET','POST'])
 @login_required
 def account():
@@ -97,5 +103,5 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.img_file)
     return render_template("account.html", title="Login", image_file = image_file, form=form)
 
-
 #python -m flask --app PedalPowered run
+

@@ -1,5 +1,5 @@
 from pedalpowered import db, login_manager
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_login import UserMixin
 
 @login_manager.user_loader
@@ -27,8 +27,11 @@ class User(db.Model, UserMixin):
 class rides(db.Model):
     #Columns for table
     id = db.Column(db.Integer, primary_key = True)
-    ride_date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    ride_date = db.Column(db.DateTime, nullable = False, default = lambda: datetime.now(timezone.utc))
+    title = db.Column(db.String, nullable = False)
     distance = db.Column(db.Float, nullable = False)
+    gas_price = db.Column(db.Float, nullable = True)
+    car_mpg = db.Column(db.Float, nullable = True)
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
