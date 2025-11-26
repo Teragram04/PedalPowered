@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from pedalpowered.models import User, rides
 from pedalpowered.forms import RegisterForm, LoginForm, UpdateAcctForm, NewRideForm
 from pedalpowered import app, db, bcrypt
@@ -24,7 +24,7 @@ def logride():
         db.session.commit()
         flash('Ride logged!', 'success')
         return redirect(url_for('home'))
-    return render_template('logride.html', title='Log a new ride', form=form)
+    return render_template('logride.html', title='Log a new ride', form=form, legend = 'New ride')
 
 @app.route("/stats")
 @login_required
@@ -105,3 +105,43 @@ def account():
 
 #python -m flask --app PedalPowered run
 
+@app.route("/post/<int:post_id>")
+def post(post_id):
+    post = rides.query.get_or_404(post_id)
+    return render_template('post.html', title = post.title, post = post)
+
+@app.route("/post/<int:post_id>/update", methods=['GET','POST'])
+@login_required
+def update_post(post_id):
+    post = rides.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = NewRideForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.distance = form.distance.data
+        post.car_mpg = form.car_mpg.data
+        post.gas_price = form.gas_price.data
+        db.session.commit()
+        flash('Ride updated!','success')
+        return redirect(url_for('post', post_id=post.id))
+    #Loads in data from old post
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.distance.data = post.distance
+        form.car_mpg.data = post.car_mpg
+        form.gas_price.data = post.gas_price
+    return render_template('logride.html', title='Update a ride',
+                            form=form, legend = 'Update ride')
+
+
+@app.route("/post/<int:post_id>/delete", methods=['POST'])
+@login_required
+def delete_ride(post_id):
+    post = rides.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Ride deleted!','success')
+    return redirect(url_for('home'))
