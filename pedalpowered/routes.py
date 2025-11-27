@@ -6,6 +6,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 import secrets
 import os
 from PIL import Image
+from pedalpowered.stats_calculator import get_user_stats
 
 @app.route("/home")
 @login_required
@@ -30,7 +31,8 @@ def logride():
 @app.route("/stats")
 @login_required
 def stats():
-    return render_template("stats.html", title="Your Stats")
+    statistics = get_user_stats(current_user.id)
+    return render_template("stats.html", title="Your Stats", cumulative_statistics=statistics)
 
 @app.route("/register", methods = ['GET','POST'])
 def register():
