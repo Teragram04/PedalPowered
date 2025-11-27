@@ -26,6 +26,20 @@
                 {% endif %}
                 <!--DONE PRINTING ERRORS-->
             </div>
+            
+            <!--Date-->
+            <div class="form-group">
+                {{ form.ride_date.label(class="form-control-label") }}
+                {% if form.ride_date.errors %}
+                    {{ form.ride_date(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.ride_date.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.ride_date(class="form-control form-control-lg") }}
+                {% endif %}
 
             <!--Distance-->
             <div class="form-group">

@@ -27,7 +27,8 @@ class User(db.Model, UserMixin):
 class rides(db.Model):
     #Columns for table
     id = db.Column(db.Integer, primary_key = True)
-    ride_date = db.Column(db.DateTime, nullable = False, default = lambda: datetime.now(timezone.utc))
+    ride_date = db.Column(db.DateTime, nullable = False)
+    #If you want time automatically added, use default = lambda: datetime.now(timezone.utc)
     title = db.Column(db.String, nullable = False)
     distance = db.Column(db.Float, nullable = False)
     gas_price = db.Column(db.Float, nullable = True)

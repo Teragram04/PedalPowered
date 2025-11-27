@@ -7,6 +7,7 @@ import secrets
 import os
 from PIL import Image
 from pedalpowered.stats_calculator import get_user_stats
+from datetime import datetime,timezone
 
 @app.route("/home")
 @login_required
@@ -19,7 +20,11 @@ def home():
 def logride():
     form = NewRideForm()
     if form.validate_on_submit():
-        new_ride = rides(title = form.title.data, distance = form.distance.data, gas_price = form.gas_price.data,
+        ride_datetime = datetime.combine(
+            form.ride_date.data, 
+            datetime.now(timezone.utc).time()
+        )
+        new_ride = rides(title = form.title.data,ride_date=ride_datetime, distance = form.distance.data, gas_price = form.gas_price.data,
                          car_mpg = form.car_mpg.data, user_comment = form.comment.data, author = current_user)
         new_ride.calculate_money_saved()
         db.session.add(new_ride)
