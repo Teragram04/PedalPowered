@@ -75,4 +75,5 @@ class NewRideForm(FlaskForm):
     distance = FloatField('*Distance in Miles: (00.00)',validators=[DataRequired()])
     gas_price = FloatField('Avg Gas Cost (0.00)')
     car_mpg = FloatField('Avg Car MPG (00.0)')
+    comment = StringField('Notes')
     submit_registration = SubmitField('Submit my Ride!')

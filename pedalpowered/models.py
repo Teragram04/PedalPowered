@@ -34,6 +34,7 @@ class rides(db.Model):
     car_mpg = db.Column(db.Float, nullable = True)
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
     gas_money_saved = db.Column(db.Float, nullable = True)
+    user_comment = db.Column(db.String, nullable = False)
 
     #Can't do math within an SQLITE column, so define a function and then assign the value to the model
     def calculate_money_saved(self):

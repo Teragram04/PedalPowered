@@ -16,7 +16,10 @@
                 {%endif%}
             </div>
             <h2 class='article-title'>{{post.title}}</h2>
-            <p class = "article-content">on {{post.ride_date.strftime('%Y-%m-%d')}}, {{post.author.username}} rode {{post.distance}} miles</p>
+            <h6>{{post.user_comment}}</h6>
+            <p class = "article-content">on {{post.ride_date.strftime('%Y-%m-%d')}}, {{post.author.username}} rode {{post.distance}} miles
+                and saved ${{post.gas_money_saved}}!
+            </p>
         </div>
     </article>
 
