@@ -3,5 +3,9 @@
 {% block content %}
 
     <h1>Your Statistics</h1>
+    <p class="article-content">You've done a total of {{ cumulative_statistics.total_rides }} rides!</p>
+    <p class="article-content">Total distance covered: {{ cumulative_statistics.total_distance }} miles!</p>
+    <p class="article-content">Gas money saved: ${{ cumulative_statistics.total_money_saved }}!</p>
+
 
 {% endblock content %}
