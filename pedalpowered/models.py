@@ -39,7 +39,7 @@ class rides(db.Model):
 
     #Can't do math within an SQLITE column, so define a function and then assign the value to the model
     def calculate_money_saved(self):
-        if self.distance and self.car_mpg and self.gas_price != 0:
+        if self.distance and self.car_mpg and self.gas_price and self.car_mpg != 0:
             self.gas_money_saved = round(((self.distance / self.car_mpg) * self.gas_price),2)
         else:
             self.gas_money_saved = 0

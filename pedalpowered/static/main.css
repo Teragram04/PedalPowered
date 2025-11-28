@@ -99,3 +99,24 @@ a.article-title:hover {
   color:#e3e3e3;
   background-color: #3B5DA3;
 }
+
+.graph-container {
+    margin: 30px 0;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.graph-container h3 {
+    margin-top: 0;
+    color: #495057;
+}
+
+.stats-graph {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}

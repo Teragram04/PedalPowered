@@ -6,7 +6,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 import secrets
 import os
 from PIL import Image
-from pedalpowered.stats_calculator import get_user_stats
+from pedalpowered.stats_calculator import get_user_stats, graph_money_saved, graph_distance_ridden
 from datetime import datetime,timezone
 
 @app.route("/home")
@@ -37,7 +37,9 @@ def logride():
 @login_required
 def stats():
     statistics = get_user_stats(current_user.id)
-    return render_template("stats.html", title="Your Stats", cumulative_statistics=statistics)
+    money_saved_graph = graph_money_saved(current_user.id)
+    amount_biked_graph = graph_distance_ridden(current_user.id)
+    return render_template("stats.html", title="Your Stats", cumulative_statistics=statistics, money_saved=money_saved_graph, amount_biked = amount_biked_graph)
 
 @app.route("/register", methods = ['GET','POST'])
 def register():
