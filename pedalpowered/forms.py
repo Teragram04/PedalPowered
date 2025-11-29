@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField, DateField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 from pedalpowered.models import User
 from flask_login import current_user
+from datetime import date, timedelta
 
 #Used to write classes in py that are THEN converted to html within the template
 
@@ -78,3 +79,8 @@ class NewRideForm(FlaskForm):
     car_mpg = FloatField('Avg Car MPG (00.0)')
     comment = StringField('Notes')
     submit_registration = SubmitField('Submit my Ride!')
+
+class FilterByDateForm(FlaskForm):
+    start_date = DateField('Start Date', validators=[Optional()], format='%Y-%m-%d')
+    end_date = DateField('End Date', validators=[Optional()], format='%Y-%m-%d')
+    submit = SubmitField('Filter')

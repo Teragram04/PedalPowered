@@ -1,7 +1,7 @@
 from pedalpowered import db
 from pedalpowered.models import rides
 from sqlalchemy import func
-from datetime import datetime
+from datetime import datetime,timezone
 import matplotlib
 matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
@@ -9,14 +9,23 @@ import io
 import base64
 
 
-def get_user_stats(user_id):
-    stats_query = db.session.query(
+def get_user_stats(user_id, start_date = None, end_date = None):
+    query = db.session.query(
         func.count(rides.id).label('total_rides'),
         func.sum(rides.distance).label('total_distance'),
         func.sum(rides.gas_money_saved).label('total_gas_money_saved'),
         func.max(rides.distance).label('longest_distance'),
         func.min(rides.distance).label('shortest_distance')
-    ).filter_by(user_id=user_id).first()
+    ).filter_by(user_id=user_id)
+
+    if start_date:
+        query = query.filter(rides.ride_date >= start_date)
+        
+    if end_date:
+        end_datetime = datetime.combine(end_date, datetime.max.time())
+        query = query.filter(rides.ride_date <= end_date)
+
+    stats_query = query.first()
 
     cumulative_statistics = {
         'total_rides' : stats_query.total_rides or 0,
@@ -28,13 +37,25 @@ def get_user_stats(user_id):
 
     return cumulative_statistics
 
-def graph_money_saved(user_id):
+def graph_money_saved(user_id, start_date = None, end_date = None):
 
-    user_rides = rides.query.filter_by(user_id=user_id)\
-    .order_by(rides.ride_date.asc())\
-    .all()
+    query = rides.query.filter_by(user_id=user_id)\
+    .order_by(rides.ride_date.asc())
+
+    if start_date:
+        query = query.filter(rides.ride_date >= start_date)
+        
+    if end_date:
+        end_datetime = datetime.combine(end_date, datetime.max.time())
+        query = query.filter(rides.ride_date <= end_date)
+
+    user_rides = query.order_by(rides.ride_date.asc()).all()
+
+
     if not user_rides:
         return None
+    
+   
     
     dates = []
     cumulative_money = []
@@ -68,10 +89,20 @@ def graph_money_saved(user_id):
     return data_uri
 
 
-def graph_distance_ridden(user_id):
-    user_rides = rides.query.filter_by(user_id=user_id)\
-    .order_by(rides.ride_date.asc())\
-    .all()
+def graph_distance_ridden(user_id, start_date = None, end_date = None):
+    query = rides.query.filter_by(user_id=user_id)\
+    .order_by(rides.ride_date.asc())
+
+    if start_date:
+        query = query.filter(rides.ride_date >= start_date)
+        
+    if end_date:
+        end_datetime = datetime.combine(end_date, datetime.max.time())
+        query = query.filter(rides.ride_date <= end_date)
+
+    user_rides = query.order_by(rides.ride_date.asc()).all()
+
+    
     if not user_rides:
         return None
     

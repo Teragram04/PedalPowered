@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, abort
 from pedalpowered.models import User, rides
-from pedalpowered.forms import RegisterForm, LoginForm, UpdateAcctForm, NewRideForm
+from pedalpowered.forms import RegisterForm, LoginForm, UpdateAcctForm, NewRideForm, FilterByDateForm
 from pedalpowered import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets
@@ -33,13 +33,23 @@ def logride():
         return redirect(url_for('home'))
     return render_template('logride.html', title='Log a new ride', form=form, legend = 'New ride')
 
-@app.route("/stats")
+@app.route("/stats", methods = ['GET','POST'])
 @login_required
 def stats():
-    statistics = get_user_stats(current_user.id)
-    money_saved_graph = graph_money_saved(current_user.id)
-    amount_biked_graph = graph_distance_ridden(current_user.id)
-    return render_template("stats.html", title="Your Stats", cumulative_statistics=statistics, money_saved=money_saved_graph, amount_biked = amount_biked_graph)
+
+    form = FilterByDateForm()
+    
+    start_date = None
+    end_date = None
+    
+    if form.validate_on_submit():
+        start_date = form.start_date.data
+        end_date = form.end_date.data
+
+    statistics = get_user_stats(current_user.id, start_date, end_date)
+    money_saved_graph = graph_money_saved(current_user.id, start_date, end_date)
+    amount_biked_graph = graph_distance_ridden(current_user.id, start_date, end_date)
+    return render_template("stats.html", title="Your Stats", cumulative_statistics=statistics, money_saved=money_saved_graph, amount_biked = amount_biked_graph, form = form)
 
 @app.route("/register", methods = ['GET','POST'])
 def register():

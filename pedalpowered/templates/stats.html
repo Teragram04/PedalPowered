@@ -2,6 +2,41 @@
 
 {% block content %}
 
+
+    <!-- Date Range Filter Form -->
+    <div class="filter-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="date-filter-container">
+                <div class="form-group">
+                    {{ form.start_date.label(class="form-control-label") }}
+                    {{ form.start_date(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.end_date.label(class="form-control-label") }}
+                    {{ form.end_date(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+                {% if start_date or end_date %}
+                <div class="form-group">
+                    <a href="{{ url_for('stats') }}" class="btn btn-secondary">Clear Filter</a>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+        
+        {% if start_date or end_date %}
+        <p class="filter-info">
+            Showing data from 
+            {% if start_date %}{{ start_date.strftime('%B %d, %Y') }}{% else %}beginning{% endif %}
+            to 
+            {% if end_date %}{{ end_date.strftime('%B %d, %Y') }}{% else %}now{% endif %}
+        </p>
+        {% endif %}
+    </div>
+
     <h1>Your Statistics</h1>
     <p class="article-content">You've done a total of {{ cumulative_statistics.total_rides }} rides!</p>
     <p class="article-content">Total distance covered: {{ cumulative_statistics.total_distance }} miles!</p>
