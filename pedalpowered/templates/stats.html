@@ -2,45 +2,53 @@
 
 {% block content %}
 
+    <h1 style="color:#E7BB3E; font-family:'Irish Grover';">Your Statistics</h1>
 
     <!-- Date Range Filter Form -->
     <div class="filter-section">
-        <form method="POST" action="">
-            {{ form.hidden_tag() }}
-            <div class="date-filter-container">
-                <div class="form-group">
-                    {{ form.start_date.label(class="form-control-label") }}
-                    {{ form.start_date(class="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.end_date.label(class="form-control-label") }}
-                    {{ form.end_date(class="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-primary") }}
-                </div>
-                {% if start_date or end_date %}
-                <div class="form-group">
-                    <a href="{{ url_for('stats') }}" class="btn btn-secondary">Clear Filter</a>
-                </div>
-                {% endif %}
-            </div>
-        </form>
         
-        {% if start_date or end_date %}
-        <p class="filter-info">
-            Showing data from 
-            {% if start_date %}{{ start_date.strftime('%B %d, %Y') }}{% else %}beginning{% endif %}
-            to 
-            {% if end_date %}{{ end_date.strftime('%B %d, %Y') }}{% else %}now{% endif %}
-        </p>
-        {% endif %}
+        <article class = "media-body border">
+            <h2 style="color:#CE702C; font-family:'Irish Grover';">Filter by date</h2>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <div class="date-filter-container">
+                    <div class="form-group">
+                        {{ form.start_date.label(class="form-control-label") }}
+                        {{ form.start_date(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.end_date.label(class="form-control-label") }}
+                        {{ form.end_date(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                    {% if start_date or end_date %}
+                    <div class="form-group">
+                        <a href="{{ url_for('stats') }}" class="btn btn-secondary">Clear Filter</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </form>
+        
+            {% if start_date or end_date %}
+            <p class="filter-info">
+                Showing data from 
+                {% if start_date %}{{ start_date.strftime('%B %d, %Y') }}{% else %}beginning{% endif %}
+                to 
+                {% if end_date %}{{ end_date.strftime('%B %d, %Y') }}{% else %}now{% endif %}
+            </p>
+            {% endif %}
+        </article>
     </div>
 
-    <h1>Your Statistics</h1>
-    <p class="article-content">You've done a total of {{ cumulative_statistics.total_rides }} rides!</p>
-    <p class="article-content">Total distance covered: {{ cumulative_statistics.total_distance }} miles!</p>
-    <p class="article-content">Gas money saved: ${{ cumulative_statistics.total_money_saved }}!</p>
+    <div class = "media-body border">
+        <h2 style="color:#CE702C; font-family:'Irish Grover';">Cumulative Statistics</h2>
+        <h4 class="media-body stats-text">Total rides: {{ cumulative_statistics.total_rides }}</h4>
+        <h4 class="media-body stats-text">Total distance covered: {{ cumulative_statistics.total_distance }} miles!</h4>
+        <h4 class="media-body stats-text">Gas money saved: ${{ cumulative_statistics.total_money_saved }}!</h4>
+    </div>
+    
 
     {% if money_saved %}
         <div class="graph-container">

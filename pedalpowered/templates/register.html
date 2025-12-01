@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block navbar %}{% endblock %}
 {% block content %}
-    <h1>PedalPowered</h1>
+    <h1 style="color:#E7BB3E; font-family:'Irish Grover';">PedalPowered</h1>
     <div class = "content-section">
 
         <form method = "POST" action = "">
@@ -10,7 +10,7 @@
             <fieldset class="form-group">
 
                 <!--Create the body of the form-->
-                <legend class="border-bottom mb-4">Sign up!</legend>
+                <legend class="border-bottom mb-4" style="color:#E7BB3E; font-family:'Irish Grover';">Sign up!</legend>
                 <div class="form-group">
 
                     <!--Create username field. Repeats for email and password-->
@@ -86,7 +86,7 @@
             </fieldset>
 
             <div class="form-group">
-                {{form.submit_registration(class="btn btn-outline-info")}}
+                {{form.submit_registration(class="btn btn-primary")}}
             </div>
 
         </form>
@@ -94,7 +94,7 @@
 
     <div class="border-top pt-3">
         <small class ="text=muted">
-            If you have an account<a class = "ml-2" href = "{{ url_for('login')}}">Log in here!</a>
+            If you have an account <a class = "ml-2" tyle="color:#E7BB3E" href = "{{ url_for('login')}}">Log in here!</a>
         </small>
     </div>
 

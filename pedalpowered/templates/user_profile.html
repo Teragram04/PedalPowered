@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class = 'content-section'>
+        <div class = 'media'>
+            <img class = 'rounded-circle account-img' src="{{ url_for('static', filename='profile_pics/' + user.img_file) }}">
+            <div class = 'media-body'>
+                <h2 class = 'account-heading' style="color:#E7BB3E; font-family:'Irish Grover';">{{user.username}}</h2>
+                <p class = 'text-secondary' style="color:#CE702C !important; font-family:'Irish Grover';">{{user.email}}</p>
+
+                {% if user != current_user %}
+                        {% if is_friend %}
+                            <a href="{{ url_for('remove_friend', user_id=user.id) }}" 
+                               class="btn btn-danger">Remove Friend</a>
+                        {% else %}
+                            <a href="{{ url_for('add_friend', user_id=user.id) }}" 
+                               class="btn btn-primary">Add Friend</a>
+                        {% endif %}
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+
+            
+    <!-- Cumulative Statistics -->
+    <div class = "media-body border">
+        <h2 style="color:#CE702C; font-family:'Irish Grover';">Cumulative Statistics</h2>
+        <h4 class="media-body stats-text">Total rides: {{ cumulative_statistics.total_rides }}</h4>
+        <h4 class="media-body stats-text">Total distance covered: {{ cumulative_statistics.total_distance }} miles!</h4>
+        <h4 class="media-body stats-text">Gas money saved: ${{ cumulative_statistics.total_money_saved }}!</h4>
+    </div>
+            
+    <!--Money saved graph-->
+    {% if money_saved %}
+        <div class="graph-container">
+            <h3>Money Saved Over Time</h3>
+            <img src="{{ money_saved }}" alt="Money Saved Graph" class="stats-graph">
+        </div>
+    {% else %}
+        <p  style="color:#E7BB3E; font-family:'Irish Grover';">No graph data available</p>
+    {% endif %}
+
+    <!--amount biked graph-->
+    {% if amount_biked %}
+        <div class="graph-container">
+            <h3>Amount Biked over Time</h3>
+            <img src="{{ amount_biked}}" alt="Amount biked over time" class="stats-graph">
+        </div>
+    {% endif %}
+
+{% endblock %}

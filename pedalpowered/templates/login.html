@@ -10,7 +10,7 @@
             <fieldset class="form-group">
 
                 <!--Create the body of the form-->
-                <legend class="border-bottom mb-4">Log In!</legend>
+                <legend class="border-bottom mb-4" style="color:#E7BB3E; font-family:'Irish Grover';">Log In!</legend>
 
                 <!--Create username field. Repeats for email and password-->
                 <div class="form-group">
@@ -51,27 +51,18 @@
                     {% endif %}
                 </div>
 
-                <div class="form-check">
-                    {{form.remember(class="form-check-input")}}
-                    {{form.remember.label(class="form-check-label")}}
-                </div>
-
             </fieldset>
 
             <div class="form-group">
-                {{form.submit_registration(class="btn btn-outline-info")}}
+                {{form.submit_registration(class="btn btn-primary")}}
             </div>
-
-            <small class="text-muted ml-2">
-                <a href="#">Forgot Password?</a>
-            </small>
 
         </form>
     </div>
 
-    <div class="border-top pt-3">
+    <div class="border-top pt-3" style="color:#E7BB3E">
         <small class ="text=muted">
-            Need an Acccount?<a class = "ml-2" href = "{{ url_for('register')}}">Register here!</a>
+            Need an Acccount? <a class = "ml-2" href = "{{ url_for('register')}}">Register here!</a>
         </small>
     </div>
 

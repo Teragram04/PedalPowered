@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="media-body border">
+    <h2 style="font-family:Irish Grover";>Find Users</h2>
+    
+    {% if users %}
+        <div class="list-group mt-3">
+            {% for user in users %}
+            <a href="{{ url_for('user_profile', username=user.username) }}" 
+               class="list-group-item list-group-item-action" style="font-family:Irish Grover";>
+
+                <div class="d-flex align-items-center">
+                    <img src="{{ url_for('static', filename='profile_pics/' + user.img_file) }}" 
+                         class="rounded-circle mr-3" 
+                         style="width: 50px; height: 50px;">
+                    <div>
+                        <h5 class="mb-0" style="color:#CE702C";>{{ user.username }}</h5>
+                        <small class="text-muted" style="color:#CE702C";>{{ user.email }}</small>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No other users found.</p>
+    {% endif %}
+</div>
+{% endblock %}
