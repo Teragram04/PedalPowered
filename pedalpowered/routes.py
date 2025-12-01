@@ -12,7 +12,7 @@ from datetime import datetime,timezone
 @app.route("/home")
 @login_required
 def home():
-    ridelog = rides.query.all()
+    ridelog = rides.query.order_by(rides.id.desc()).all()
     return render_template("home.html",posts= ridelog)
 
 @app.route("/logride", methods = ['GET','POST'])
