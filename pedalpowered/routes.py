@@ -165,3 +165,45 @@ def delete_ride(post_id):
     db.session.commit()
     flash('Ride deleted!','success')
     return redirect(url_for('home'))
+
+
+#View indvidual profle like with posts!!
+@app.route("/user/<string:username>")
+@login_required
+def user_profile(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    is_friend = current_user.is_friend(user)
+    return render_template('user_profile.html', user=user, is_friend=is_friend)
+
+@app.route("/add_friend/<int:user_id>")
+@login_required
+def add_friend(user_id):
+    user = User.query.get_or_404(user_id)
+    if user == current_user:
+        flash('You cannot add yourself as a friend!', 'warning')
+    else:
+        current_user.add_friend(user)
+        db.session.commit()
+        flash(f'You are now friends with {user.username}!', 'success')
+    return redirect(url_for('user_profile', username=user.username))
+
+@app.route("/remove_friend/<int:user_id>")
+@login_required
+def remove_friend(user_id):
+    user = User.query.get_or_404(user_id)
+    current_user.remove_friend(user)
+    db.session.commit()
+    flash(f'You removed {user.username} from your friends.', 'info')
+    return redirect(url_for('user_profile', username=user.username))
+
+@app.route("/friends")
+@login_required
+def friend_list():
+    friends = current_user.friends.all()
+    return render_template('friends.html', friends=friends)
+
+@app.route("/users")
+@login_required
+def user_list():
+    users = User.query.filter(User.id != current_user.id).all()
+    return render_template('user_list.html', users=users)

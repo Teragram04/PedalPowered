@@ -7,6 +7,9 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+friendships = db.Table('friendships',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('friend_id', db.Integer, db.ForeignKey('user.id'), primary_key=True))
 
 class User(db.Model, UserMixin):
     #Columns for table
@@ -21,8 +24,36 @@ class User(db.Model, UserMixin):
 
     ridelog = db.relationship('rides', backref="author", lazy=True)
 
+    friends = db.relationship('User',
+                             secondary=friendships,
+                             primaryjoin=(friendships.c.user_id == id),
+                             secondaryjoin=(friendships.c.friend_id == id),
+                             backref=db.backref('friended_by', lazy='dynamic'),
+                             lazy='dynamic')
+
+
+    #Friendship table
+
+
+    def is_friend(self, user):
+        return self.friends.filter(friendships.c.friend_id == user.id).count() > 0
+
+    def add_friend(self, user):
+        if not self.is_friend(user):
+            self.friends.append(user)
+            user.friends.append(self)
+
+    def remove_friend(self,user):
+        if self.is_friend(user):
+            self.friends.remove(user)
+            user.friends.remove(self)
+    
+
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.img_file}')"
+
+
+
 
 class rides(db.Model):
     #Columns for table

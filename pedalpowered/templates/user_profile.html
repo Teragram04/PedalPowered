@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename='profile_pics/' + user.img_file) }}" 
+                         class="rounded-circle mb-3" 
+                         style="width: 150px; height: 150px;">
+                    <h2>{{ user.username }}</h2>
+                    <p class="text-muted">{{ user.email }}</p>
+                    
+                    {% if user != current_user %}
+                        {% if is_friend %}
+                            <a href="{{ url_for('remove_friend', user_id=user.id) }}" 
+                               class="btn btn-danger">Remove Friend</a>
+                        {% else %}
+                            <a href="{{ url_for('add_friend', user_id=user.id) }}" 
+                               class="btn btn-primary">Add Friend</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Display user's rides -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4>Recent Rides</h4>
+                </div>
+                <div class="card-body">
+                    {% if user.ridelog %}
+                        <div class="list-group">
+                            {% for ride in user.ridelog[:5] %}
+                            <div class="list-group-item">
+                                <h5>{{ ride.title }}</h5>
+                                <p><strong>Distance:</strong> {{ ride.distance }} miles | 
+                                   <strong>Date:</strong> {{ ride.ride_date.strftime('%B %d, %Y') }}</p>
+                                {% if ride.user_comment %}
+                                <p class="text-muted"><em>{{ ride.user_comment }}</em></p>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No rides logged yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
