@@ -31,7 +31,7 @@ def logride():
         db.session.commit()
         flash('Ride logged!', 'success')
         return redirect(url_for('home'))
-    return render_template('logride.html', title='Log a new ride', form=form, legend = 'New ride')
+    return render_template('logride.html', title='Log a new ride', form=form, legend = 'New Ride')
 
 @app.route("/stats", methods = ['GET','POST'])
 @login_required
@@ -152,7 +152,7 @@ def update_post(post_id):
         form.car_mpg.data = post.car_mpg
         form.gas_price.data = post.gas_price
     return render_template('logride.html', title='Update a ride',
-                            form=form, legend = 'Update ride')
+                            form=form, legend = 'Update Ride')
 
 
 @app.route("/post/<int:post_id>/delete", methods=['POST'])
@@ -173,7 +173,14 @@ def delete_ride(post_id):
 def user_profile(username):
     user = User.query.filter_by(username=username).first_or_404()
     is_friend = current_user.is_friend(user)
-    return render_template('user_profile.html', user=user, is_friend=is_friend)
+
+    cumulative_statistics = get_user_stats(user.id, None, None)
+    money_saved_graph = graph_money_saved(user.id, None, None)
+    amount_biked_graph = graph_distance_ridden(user.id, None, None)
+
+    return render_template('user_profile.html', user=user, is_friend=is_friend, cumulative_statistics=cumulative_statistics,
+                         money_saved=money_saved_graph,
+                         amount_biked=amount_biked_graph)
 
 @app.route("/add_friend/<int:user_id>")
 @login_required

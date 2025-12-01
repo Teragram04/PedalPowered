@@ -24,16 +24,8 @@ class User(db.Model, UserMixin):
 
     ridelog = db.relationship('rides', backref="author", lazy=True)
 
-    friends = db.relationship('User',
-                             secondary=friendships,
-                             primaryjoin=(friendships.c.user_id == id),
-                             secondaryjoin=(friendships.c.friend_id == id),
-                             backref=db.backref('friended_by', lazy='dynamic'),
-                             lazy='dynamic')
-
-
-    #Friendship table
-
+    friends = db.relationship('User', secondary=friendships, primaryjoin=(friendships.c.user_id == id), secondaryjoin=(friendships.c.friend_id == id),
+    backref=db.backref('friended_by', lazy='dynamic'),lazy='dynamic')
 
     def is_friend(self, user):
         return self.friends.filter(friendships.c.friend_id == user.id).count() > 0
@@ -48,7 +40,6 @@ class User(db.Model, UserMixin):
             self.friends.remove(user)
             user.friends.remove(self)
     
-
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.img_file}')"
 

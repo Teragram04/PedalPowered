@@ -3,13 +3,13 @@
 {% block content %}
 <h1 style="font-family: Irish Grover";>Recent Activity</h1>
     {% for post in posts %}
-        <article class="media-body">
+        <article class="media-body border">
             <div class = "media-body">
                 <div class="article-metadata">
-                    <a class = 'mr-2' href="{{url_for('user_profile', username=post.author.username)}}">{{post.author.username}}</a>
+                    <a class = 'mr-2' style="color:#E7BB3E; font-family:'Irish Grover';" href="{{url_for('user_profile', username=post.author.username)}}">{{post.author.username}}</a>
                     <small class="text-muted">{{post.date_posted}}</small>
                 </div>
-                <h2><a class='article-title' href="{{url_for('post',post_id=post.id)}}">{{post.title}}</a></h2>
+                <h2><a class='article-title'style="font-family:'Irish Grover';" href="{{url_for('post',post_id=post.id)}}">{{post.title}}</a></h2>
                 <p class = "article-content">on {{post.ride_date.strftime('%Y-%m-%d')}}, {{post.author.username}} rode {{post.distance}} miles
                     and saved ${{post.gas_money_saved}}!
                 </p>

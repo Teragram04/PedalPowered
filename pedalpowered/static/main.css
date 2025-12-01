@@ -39,14 +39,14 @@ h1, h2, h3, h4, h5, h6 .irish-grover-regular {
 }
 
 a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
+  color:#CE702C;
+  text-decoration: underline;
 }
 
 .article-content {
   white-space: pre-line;
   background-color:#3B5DA3;
-  color:#E7BB3E
+  color:#E7BB3E;
 }
 
 .article-img {
@@ -98,6 +98,7 @@ a.article-title:hover {
 .media-body{
   color:#e3e3e3;
   background-color: #3B5DA3;
+  border-width: 5px;
 }
 
 .graph-container {
@@ -119,4 +120,36 @@ a.article-title:hover {
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+.form-group{
+  color: #E7BB3E;
+}
+
+.mr-2{
+  color:#E7BB3E !important;
+  text-decoration: underline;
+}
+.mr-2:hover{
+  color: #CE702C !important;
+  text-decoration: underline !important;
+}
+
+.border{
+  border: 2px solid #E7BB3E;
+  border-radius: 7px;
+  padding: 2px;
+  margin-bottom: 10px;
+}
+
+.colortext{
+  color:#E7BB3E;
+}
+
+.colortext:hover{
+  color:#CE702C;
+}
+
+.stats-text{
+  color:#E7BB3E;
 }

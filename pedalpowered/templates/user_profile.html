@@ -1,17 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-body text-center">
-                    <img src="{{ url_for('static', filename='profile_pics/' + user.img_file) }}" 
-                         class="rounded-circle mb-3" 
-                         style="width: 150px; height: 150px;">
-                    <h2>{{ user.username }}</h2>
-                    <p class="text-muted">{{ user.email }}</p>
-                    
-                    {% if user != current_user %}
+    <div class = 'content-section'>
+        <div class = 'media'>
+            <img class = 'rounded-circle account-img' src="{{ url_for('static', filename='profile_pics/' + user.img_file) }}">
+            <div class = 'media-body'>
+                <h2 class = 'account-heading' style="color:#E7BB3E; font-family:'Irish Grover';">{{user.username}}</h2>
+                <p class = 'text-secondary' style="color:#CE702C !important; font-family:'Irish Grover';">{{user.email}}</p>
+
+                {% if user != current_user %}
                         {% if is_friend %}
                             <a href="{{ url_for('remove_friend', user_id=user.id) }}" 
                                class="btn btn-danger">Remove Friend</a>
@@ -20,34 +16,35 @@
                                class="btn btn-primary">Add Friend</a>
                         {% endif %}
                     {% endif %}
-                </div>
-            </div>
-            
-            <!-- Display user's rides -->
-            <div class="card mt-4">
-                <div class="card-header">
-                    <h4>Recent Rides</h4>
-                </div>
-                <div class="card-body">
-                    {% if user.ridelog %}
-                        <div class="list-group">
-                            {% for ride in user.ridelog[:5] %}
-                            <div class="list-group-item">
-                                <h5>{{ ride.title }}</h5>
-                                <p><strong>Distance:</strong> {{ ride.distance }} miles | 
-                                   <strong>Date:</strong> {{ ride.ride_date.strftime('%B %d, %Y') }}</p>
-                                {% if ride.user_comment %}
-                                <p class="text-muted"><em>{{ ride.user_comment }}</em></p>
-                                {% endif %}
-                            </div>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <p class="text-muted">No rides logged yet.</p>
-                    {% endif %}
-                </div>
             </div>
         </div>
     </div>
-</div>
+
+            
+    <!-- Cumulative Statistics -->
+    <div class = "media-body border">
+        <h2 style="color:#CE702C; font-family:'Irish Grover';">Cumulative Statistics</h2>
+        <h4 class="media-body stats-text">Total rides: {{ cumulative_statistics.total_rides }}</h4>
+        <h4 class="media-body stats-text">Total distance covered: {{ cumulative_statistics.total_distance }} miles!</h4>
+        <h4 class="media-body stats-text">Gas money saved: ${{ cumulative_statistics.total_money_saved }}!</h4>
+    </div>
+            
+    <!--Money saved graph-->
+    {% if money_saved %}
+        <div class="graph-container">
+            <h3>Money Saved Over Time</h3>
+            <img src="{{ money_saved }}" alt="Money Saved Graph" class="stats-graph">
+        </div>
+    {% else %}
+        <p  style="color:#E7BB3E; font-family:'Irish Grover';">No graph data available</p>
+    {% endif %}
+
+    <!--amount biked graph-->
+    {% if amount_biked %}
+        <div class="graph-container">
+            <h3>Amount Biked over Time</h3>
+            <img src="{{ amount_biked}}" alt="Amount biked over time" class="stats-graph">
+        </div>
+    {% endif %}
+
 {% endblock %}

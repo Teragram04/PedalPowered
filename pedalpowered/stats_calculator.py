@@ -74,6 +74,8 @@ def graph_money_saved(user_id, start_date = None, end_date = None):
     plt.ylabel('Money saved ($)')
     plt.xticks(rotation=45)
     plt.tight_layout()
+    plt.grid(color='b', linestyle='--', linewidth=.5)
+
 
     # Save plot to a bytes buffer
     buffer = io.BytesIO()
@@ -120,9 +122,10 @@ def graph_distance_ridden(user_id, start_date = None, end_date = None):
     plt.plot(dates, cumulative_distance)
     plt.title('Distance biked over time')
     plt.xlabel('Date')
-    plt.ylabel('Distance biked')
+    plt.ylabel('Distance biked (miles)')
     plt.xticks(rotation=45)
     plt.tight_layout()
+    plt.grid(color='b', linestyle='--', linewidth=.5)
 
     # Save plot to a bytes buffer
     buffer = io.BytesIO()
