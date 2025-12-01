@@ -2,5 +2,5 @@
 from pedalpowered import app
 
 if __name__ == '__main__':
-    app.run(debuf=True)
+    app.run
 
